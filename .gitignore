@@ -1,0 +1,6 @@
+manual.txt
+/.vscode
+/backend/appsettings.Development.json
+/backend/appsettings.json
+/RestClient
+
