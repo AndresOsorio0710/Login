@@ -1,0 +1,16 @@
+E:\NEW_ORDER\Diciembre2021\Login\pruebas\bin\Debug\net5.0\pruebas.exe
+E:\NEW_ORDER\Diciembre2021\Login\pruebas\bin\Debug\net5.0\pruebas.deps.json
+E:\NEW_ORDER\Diciembre2021\Login\pruebas\bin\Debug\net5.0\pruebas.runtimeconfig.json
+E:\NEW_ORDER\Diciembre2021\Login\pruebas\bin\Debug\net5.0\pruebas.runtimeconfig.dev.json
+E:\NEW_ORDER\Diciembre2021\Login\pruebas\bin\Debug\net5.0\pruebas.dll
+E:\NEW_ORDER\Diciembre2021\Login\pruebas\bin\Debug\net5.0\ref\pruebas.dll
+E:\NEW_ORDER\Diciembre2021\Login\pruebas\bin\Debug\net5.0\pruebas.pdb
+E:\NEW_ORDER\Diciembre2021\Login\pruebas\obj\Debug\net5.0\pruebas.csproj.AssemblyReference.cache
+E:\NEW_ORDER\Diciembre2021\Login\pruebas\obj\Debug\net5.0\pruebas.GeneratedMSBuildEditorConfig.editorconfig
+E:\NEW_ORDER\Diciembre2021\Login\pruebas\obj\Debug\net5.0\pruebas.AssemblyInfoInputs.cache
+E:\NEW_ORDER\Diciembre2021\Login\pruebas\obj\Debug\net5.0\pruebas.AssemblyInfo.cs
+E:\NEW_ORDER\Diciembre2021\Login\pruebas\obj\Debug\net5.0\pruebas.csproj.CoreCompileInputs.cache
+E:\NEW_ORDER\Diciembre2021\Login\pruebas\obj\Debug\net5.0\pruebas.dll
+E:\NEW_ORDER\Diciembre2021\Login\pruebas\obj\Debug\net5.0\ref\pruebas.dll
+E:\NEW_ORDER\Diciembre2021\Login\pruebas\obj\Debug\net5.0\pruebas.pdb
+E:\NEW_ORDER\Diciembre2021\Login\pruebas\obj\Debug\net5.0\pruebas.genruntimeconfig.cache
