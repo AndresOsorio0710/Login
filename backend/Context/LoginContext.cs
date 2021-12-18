@@ -10,5 +10,6 @@ namespace backend.Context
 
         }
         public DbSet<User> Users { get; set; }
+        public DbSet<Login> Logins { get; set; }
     }
 }

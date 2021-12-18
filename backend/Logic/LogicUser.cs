@@ -13,15 +13,13 @@ namespace backend.Logic
         private Boolean containNumbers;
         private Boolean containLowercase;
         private Boolean containCapitalLetters;
+        private MD5Generate mD5Generate;
+        public LogicUser(){
+            this.mD5Generate = new MD5Generate();
+        }
         public string GetMD5(string _password)
         {
-            MD5 md5 = MD5CryptoServiceProvider.Create();
-            ASCIIEncoding aSCIIEncoding = new ASCIIEncoding();
-            byte[] stream = null;
-            StringBuilder password = new StringBuilder();
-            stream = md5.ComputeHash(aSCIIEncoding.GetBytes(_password));
-            for (int i = 0; i < stream.Length; i++) password.AppendFormat("{0:x2}", stream[i]);
-            return password.ToString();
+            return this.mD5Generate.GetMD5(_password);
         }
 
         public string VlidatePassword(string _password)
@@ -56,25 +54,8 @@ namespace backend.Logic
             containLowercase = false;
             containCapitalLetters = false;
             string[] str = _str.Split("");
-            for (int i = 0; i < str.Length; i++)
-            {
-                /*if (Regex.IsMatch(_str.Substring(i, i + 1), @"^[a-z]+$"))
-                {
-                    containLowercase = true;
-                }
-                if (Regex.IsMatch(_str.Substring(i, i + 1), @"^[A-Z]+$"))
-                {
-                    containCapitalLetters = true;
-                }
-                if (Regex.IsMatch(_str.Substring(i, i + 1), @"^[0-9]+$"))
-                {
-                    containNumbers = true;
-                }*/
-                Console.WriteLine("\n" + i + " " + (i + 1) + " " + str[i]);
-            }
             foreach (char s in _str)
             {
-                Console.WriteLine("\n" + s);
                 if (Regex.IsMatch(s.ToString(), @"^[a-z]+$"))
                 {
                     containLowercase = true;

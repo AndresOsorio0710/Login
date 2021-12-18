@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using backend.Context;
 using backend.Models;
+using backend.Logic;
 
 namespace backend.Controllers
 {
@@ -14,28 +15,30 @@ namespace backend.Controllers
     public class LoginController : ControllerBase
     {
         private readonly LoginContext loginContext;
+        private LogicLogin logicLogin;
         public LoginController(LoginContext _loginContext)
         {
             this.loginContext = _loginContext;
+            this.logicLogin = new LogicLogin();
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> Get()
+        public async Task<ActionResult<IEnumerable<Login>>> Get()
         {
-            return await this.loginContext.Users.ToListAsync();
+            return await this.loginContext.Logins.ToListAsync();
         }
 
         [HttpGet("{_id}")]
-        public async Task<ActionResult<User>> Get(Guid _id)
+        public async Task<ActionResult<IEnumerable<Login>>> Get(Guid _id)
         {
             try
             {
-                var user = await this.loginContext.Users.FindAsync(_id);
-                if (user == null)
+                var login = await this.loginContext.Logins.Where(l => l.UserId==_id).ToListAsync();
+                if (login == null)
                 {
                     return NotFound();
                 }
-                return Ok(user);
+                return Ok(login);
             }
             catch (Exception e)
             {
@@ -44,55 +47,40 @@ namespace backend.Controllers
 
         }
 
-        [HttpPost]
-        public async Task<ActionResult<User>> Post(User _user)
-        {
-            string response = this.Validate(_user);
-            if (response.Equals("Ok"))
-            {
-                _user.UserId = Guid.NewGuid();
-                if (!_user.UserRole.Equals("SA") && !_user.UserRole.Equals("US"))
-                {
-                    _user.UserRole = "US";
-                }
-                this.loginContext.Users.Add(_user);
-                await this.loginContext.SaveChangesAsync();
-                return CreatedAtAction(nameof(Get), new { id = _user.UserId }, _user);
-            }
-            else
-            {
-                return Ok(response);
-            }
-        }
-
-
-
         [HttpGet("{_user}/{_password}")]
-        public ActionResult<List<User>> GatlogIn(string _user, string _password)
+        public ActionResult GetlogIn(string _user, string _password)
         {
-            var users = this.loginContext.Users.Where(u => (u.UserName.Equals(_user) || u.UserEmail.Equals(_user)) && (u.UserPassword.Equals(_password))).ToList();
-            if (users == null)
+            User u = this.loginContext.Users.Where(
+                u => (u.UserName.Equals(_user) || u.UserEmail.Equals(_user))
+                && (u.UserPassword.Equals(this.logicLogin.GetMD5(_password)))).FirstOrDefault();
+            if (u == null)
             {
-                return NotFound();
+                return Ok("Not result.");
             }
-            return Ok(users);
+            this.SaveLogin(u.UserId, _password);
+
+            var user = new
+            {
+                id = u.UserId,
+                userName = u.UserPassword,
+                email = u.UserEmail,
+                role = u.UserRole
+            };
+            return Ok(user);
         }
 
-        private string Validate(User _user)
+        private async void SaveLogin(Guid _userId, string _useKey)
         {
-            var user = this.loginContext.Users.Where(u => (u.UserName == _user.UserName || u.UserEmail == _user.UserEmail)).FirstOrDefault();
-            if (user == null)
-            {
-                return "Ok";
-            }
-            else if (user.UserName == _user.UserName)
-            {
-                return "Username not availiable.";
-            }
-            else
-            {
-                return "User email not availiable.";
-            }
+            var user = await this.loginContext.Users.FindAsync(_userId);
+            Login login = new Login();
+            login.LoginId = new Guid();
+            login.UserId = user.UserId;
+            login.UserKey = _useKey;
+            login.Password = user.UserPassword;
+            login.DateIn = new DateTime();
+            login.User = user;
+            this.loginContext.Logins.Add(login);
+            await this.loginContext.SaveChangesAsync();
         }
     }
 }

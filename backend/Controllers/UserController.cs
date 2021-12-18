@@ -25,19 +25,29 @@ namespace backend.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> Get()
+        public ActionResult Get()
         {
-            return await this.loginContext.Users.ToListAsync();
+            //return await this.loginContext.Users.ToListAsync();
+            var list = this.loginContext.Users.Select(user => new
+            {
+                id = user.UserId,
+                userName = user.UserPassword,
+                email = user.UserEmail,
+                role = user.UserRole
+            });
+            return Ok(list);
         }
 
         [HttpGet("{_id}")]
-        public async Task<ActionResult<User>> Get(Guid _id)
+        public ActionResult Get(Guid _id)
         {
-            var user = await this.loginContext.Users.FindAsync(_id);
-            if (user == null)
+            var user = this.loginContext.Users.Where(user => user.UserId == _id).Select(user => new
             {
-                return Ok("Not result.");
-            }
+                id = user.UserId,
+                userName = user.UserPassword,
+                email = user.UserEmail,
+                role = user.UserRole
+            }); 
             return Ok(user);
         }
 
