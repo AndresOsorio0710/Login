@@ -1,10 +1,12 @@
-import React from 'react';
+import React from "react";
+import { BrowserRouter } from "react-router-dom";
+import Master from "./components/master";
 
 function App() {
   return (
-    <div>
-      App
-    </div>
+    <BrowserRouter>
+      <Master />
+    </BrowserRouter>
   );
 }
 
